@@ -4264,7 +4264,11 @@ int32_t AudioDeviceWindowsWasapi::EnableBuiltInAGC(bool enable) {
 }
 
 bool AudioDeviceWindowsWasapi::BuiltInAGCIsAvailable() const {
+#if 0
   return CheckBuiltInRenderCapability(Windows::Media::Effects::AudioEffectType::AutomaticGainControl);
+#else
+	return false;
+#endif
 }
 
 bool AudioDeviceWindowsWasapi::CheckBuiltInCaptureCapability(Windows::Media::Effects::AudioEffectType effect) const {

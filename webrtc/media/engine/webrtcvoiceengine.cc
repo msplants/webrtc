@@ -337,7 +337,9 @@ void WebRtcVoiceEngine::Init() {
   webrtc::adm_helpers::SetRecordingDevice(adm_);
 #endif
   apm()->Initialize();
+#if 0
   webrtc::adm_helpers::SetPlayoutDevice(adm_);
+#endif
 #endif  // !WEBRTC_IOS
 
   // May be null for VoE injected for testing.

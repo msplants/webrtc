@@ -273,7 +273,7 @@ int VoEBaseImpl::Init(
                                               RTC_FROM_HERE);
   }
 
-  bool available = false;
+  // bool available = false;
 
   // --------------------
   // Reinitialize the ADM
@@ -299,6 +299,8 @@ int VoEBaseImpl::Init(
     return -1;
   }
 
+
+#if 0
   // Initialize the default speaker
   if (shared_->audio_device()->SetPlayoutDevice(
           WEBRTC_VOICE_ENGINE_DEFAULT_DEVICE) != 0) {
@@ -310,7 +312,7 @@ int VoEBaseImpl::Init(
                           "Init() failed to initialize the speaker");
   }
 
-  #if 0
+
   // Initialize the default microphone
   if (shared_->audio_device()->SetRecordingDevice(
           WEBRTC_VOICE_ENGINE_DEFAULT_DEVICE) != 0) {
@@ -321,7 +323,6 @@ int VoEBaseImpl::Init(
     shared_->SetLastError(VE_CANNOT_ACCESS_MIC_VOL, kTraceInfo,
                           "Init() failed to initialize the microphone");
   }
-  #endif
 
   // Set number of channels
   if (shared_->audio_device()->StereoPlayoutIsAvailable(&available) != 0) {
@@ -333,7 +334,6 @@ int VoEBaseImpl::Init(
                           "Init() failed to set mono/stereo playout mode");
   }
 
-  #if 0
   // TODO(andrew): These functions don't tell us whether stereo recording
   // is truly available. We simply set the AudioProcessing input to stereo
   // here, because we have to wait until receiving the first frame to
@@ -346,7 +346,7 @@ int VoEBaseImpl::Init(
     shared_->SetLastError(VE_SOUNDCARD_ERROR, kTraceWarning,
                           "Init() failed to set mono/stereo recording mode");
   }
-  #endif
+#endif
 
   shared_->set_audio_processing(audio_processing);
 
@@ -671,11 +671,12 @@ int32_t VoEBaseImpl::TerminateInternal() {
   }
 
   if (shared_->audio_device()) {
+#if 0
     if (shared_->audio_device()->StopPlayout() != 0) {
       shared_->SetLastError(VE_SOUNDCARD_ERROR, kTraceWarning,
                             "TerminateInternal() failed to stop playout");
     }
-#if 0
+
     if (shared_->audio_device()->StopRecording() != 0) {
       shared_->SetLastError(VE_SOUNDCARD_ERROR, kTraceWarning,
                             "TerminateInternal() failed to stop recording");
